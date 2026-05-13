@@ -43,3 +43,78 @@ The system integrates Gemini API to classify ticket categories, detect priority 
   "title": "Payment failed",
   "description": "Money was deducted but transaction failed"
 }
+```
+## Example Response
+```json
+{
+  "id": 1,
+  "title": "Payment failed",
+  "description": "Money was deducted but transaction failed",
+  "category": "Payment Issue",
+  "priority": "High",
+  "status": "Open",
+  "suggestedReply": "Please check the transaction history and verify the payment gateway status."
+}
+```
+
+## How to Run
+1. Clone the repository
+```json
+git clone https://github.com/ng-quys/AI-Powered-Support-Ticket-System.git
+cd AI-Powered-Support-Ticket-System/AISupportTicketSystem
+```
+
+2. Create MySQL database
+```json
+CREATE DATABASE ai_support_ticket_db;
+```
+3. Configure application.properties
+```
+spring.datasource.url=jdbc:mysql://localhost:3306/ai_support_ticket_db
+spring.datasource.username=root
+spring.datasource.password=your_password
+
+- gemini.api.key=your_gemini_api_key
+```
+4. Run the application
+```json
+./mvnw spring-boot:run
+```
+
+Swagger UI
+
+After running the project, open:
+```json
+http://localhost:8080/swagger-ui/index.html
+```
+
+## Screenshots
+
+### Swagger API Documentation
+![Swagger API](screenshots/swagger-api-list.png)
+
+### Get Tickets Response
+![Get Tickets](screenshots/get-tickets-response.png)
+
+### Create Ticket Response
+![Create Ticket](screenshots/create-ticket-response.png)
+
+### Put Tickets Reponse
+![Put Ticket](screenshots/put-ticket-response.png)
+
+### Delete Tickets Response
+![Detele Tickets](screenshots/delete-tickets-response.png)
+
+
+## Author
+
+**Ho Ngoc Quy**
+
+- GitHub: https://github.com/ng-quys
+- Email: hnquy08@gmail.com
+
+
+
+
+
+
