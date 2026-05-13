@@ -6,6 +6,7 @@
 - Priority detection
 - Suggested AI response
 - Ticket status management
+- Documented and tested APIs using Swagger UI
 
 ## Tech Stack:
 - Java Spring Boot
