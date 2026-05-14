@@ -26,6 +26,24 @@ The system integrates Gemini API to classify ticket categories, detect priority 
 - Swagger UI
 - Maven
 
+## Architecture Diagram
+
+```text
+Client / Postman / Swagger UI
+        |
+        v
+Spring Boot REST API
+        |
+        v
+Ticket Controller
+        |
+        v
+Ticket Service
+   |            |
+   v            v
+MySQL        Gemini API
+```
+
 ## API Endpoints
 
 | Method | Endpoint | Description |
@@ -59,13 +77,13 @@ The system integrates Gemini API to classify ticket categories, detect priority 
 
 ## How to Run
 1. Clone the repository
-```json
+```
 git clone https://github.com/ng-quys/AI-Powered-Support-Ticket-System.git
 cd AI-Powered-Support-Ticket-System/AISupportTicketSystem
 ```
 
 2. Create MySQL database
-```json
+```
 CREATE DATABASE ai_support_ticket_db;
 ```
 3. Configure application.properties
@@ -74,17 +92,16 @@ spring.datasource.url=jdbc:mysql://localhost:3306/ai_support_ticket_db
 spring.datasource.username=root
 spring.datasource.password=your_password
 
-- gemini.api.key=your_gemini_api_key
+gemini.api.key=your_gemini_api_key
 ```
 4. Run the application
-```json
+```bash
 ./mvnw spring-boot:run
 ```
 
-Swagger UI
-
+5. Swagger UI
 After running the project, open:
-```json
+```
 http://localhost:8080/swagger-ui/index.html
 ```
 
@@ -93,16 +110,16 @@ http://localhost:8080/swagger-ui/index.html
 ### Swagger API Documentation
 ![Swagger API](screenshots/swagger-api-list.png)
 
-### Get Tickets Response
+### Get Ticket Response
 ![Get Tickets](screenshots/get-tickets-response.png)
 
 ### Create Ticket Response
 ![Create Ticket](screenshots/create-ticket-response.png)
 
-### Put Tickets Reponse
+### Put Ticket Reponse
 ![Put Ticket](screenshots/put-ticket-response.png)
 
-### Delete Tickets Response
+### Delete Ticket Response
 ![Detele Tickets](screenshots/delete-tickets-response.png)
 
 
