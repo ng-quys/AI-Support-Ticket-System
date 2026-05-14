@@ -44,6 +44,25 @@ Ticket Service
 MySQL        Gemini API
 ```
 
+## flowchart LR
+```mermaid
+flowchart LR
+    User --> Controller
+    Controller --> Service
+    Service --> GeminiAPI
+    Service --> Repository
+    Repository --> MySQL
+```
+## Ticket Flow
+```mermaid
+sequenceDiagram
+    User->>API: Create ticket
+    API->>Gemini: Analyze ticket
+    Gemini-->>API: Category/Priority
+    API->>DB: Save ticket
+    API-->>User: Return response
+```
+
 ## API Endpoints
 
 | Method | Endpoint | Description |
