@@ -18,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -85,5 +86,61 @@ class TicketServiceTest {
                 .hasMessageContaining("Ticket not found with id: 99");
 
         verify(ticketRepository, never()).delete(any(Ticket.class));
+    }
+    @Test
+    void updateTicketStatus_shouldUpdateStatusSuccessfully() {
+        Ticket ticket = new Ticket();
+        ticket.setId(1L);
+        ticket.setTitle("Cannot login");
+        ticket.setDescription("User cannot login to system");
+        ticket.setCategory(TicketCategory.ACCOUNT_ISSUE);
+        ticket.setPriority(TicketPriority.HIGH);
+        ticket.setSuggestedReply("Please reset your password.");
+        ticket.setClassificationSource(ClassificationSource.GEMINI);
+        ticket.setStatus(TicketStatus.OPEN);
+
+        Ticket updatedTicket = new Ticket();
+        updatedTicket.setId(1L);
+        updatedTicket.setTitle("Cannot login");
+        updatedTicket.setDescription("User cannot login to system");
+        updatedTicket.setCategory(TicketCategory.ACCOUNT_ISSUE);
+        updatedTicket.setPriority(TicketPriority.HIGH);
+        updatedTicket.setSuggestedReply("Please reset your password.");
+        updatedTicket.setClassificationSource(ClassificationSource.GEMINI);
+        updatedTicket.setStatus(TicketStatus.RESOLVED);
+
+        when(ticketRepository.findById(1L)).thenReturn(Optional.of(ticket));
+        when(ticketRepository.saveAndFlush(any(Ticket.class))).thenReturn(updatedTicket);
+
+        TicketResponse result = ticketService.updateTicketStatus(1L, "resolved");
+
+        assertThat(result).isNotNull();
+        assertThat(result.getStatus()).isEqualTo(TicketStatus.RESOLVED.getLabel());
+
+        verify(ticketRepository, times(1)).findById(1L);
+        verify(ticketRepository, times(1)).saveAndFlush(any(Ticket.class));
+    }
+
+    @Test
+    void getAllTickets_shouldReturnTickets() {
+        Ticket ticket = new Ticket();
+        ticket.setId(1L);
+        ticket.setTitle("Cannot login");
+        ticket.setDescription("User cannot login to system");
+        ticket.setCategory(TicketCategory.ACCOUNT_ISSUE);
+        ticket.setPriority(TicketPriority.HIGH);
+        ticket.setSuggestedReply("Please reset your password.");
+        ticket.setClassificationSource(ClassificationSource.GEMINI);
+        ticket.setStatus(TicketStatus.OPEN);
+
+        when(ticketRepository.findAllByOrderByCreatedAtDesc())
+                .thenReturn(List.of(ticket));
+
+        List<TicketResponse> result = ticketService.getAllTickets();
+
+        assertThat(result).hasSize(1);
+        assertThat(result.get(0).getTitle()).isEqualTo("Cannot login");
+
+        verify(ticketRepository, times(1)).findAllByOrderByCreatedAtDesc();
     }
 }
